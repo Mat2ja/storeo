@@ -19,6 +19,7 @@ class UsersRepository {
         }
     }
 
+    // Get all records
     async getAll() {
         // Open this.filename and parse the contents
         return JSON.parse(await fs.promises.readFile(this.filename, {
@@ -26,6 +27,7 @@ class UsersRepository {
         }));
     }
 
+    // Create a new record with given attributes
     async create(attrs) {
         attrs.id = this.randomId();
 
@@ -33,34 +35,72 @@ class UsersRepository {
         records.push(attrs);
 
         await this.writeAll(records);
+
+        return attrs;
     }
 
+    // Rewrite records
     async writeAll(records) {
         await fs.promises.writeFile(this.filename, JSON.stringify(records, null, 2));
     }
 
+    // Get random id
     randomId() {
         return crypto.randomBytes(4).toString('hex');
     }
 
+    // Get one record
     async getOne(id) {
         const records = await this.getAll();
         return records.find(record => record.id === id);
     }
 
+    // Delete one record
     async delete(id) {
         const records = await this.getAll();
         const filteredRecords = records.filter(record => record.id !== id);
         await this.writeAll(filteredRecords);
     }
+
+    // Update one record with the new attrs
+    async update(id, attrs) {
+        const records = await this.getAll();
+        const record = records.find(record => record.id === id);
+
+        if (!record) {
+            throw new Erorr(`Record with ${id} not found`);
+        }
+
+        // overwrite existing attributes and add new ones to given object
+        Object.assign(record, attrs);
+        await this.writeAll(records);
+    }
+
+    async getOneBy(filters) {
+        const records = await this.getAll();
+
+        for (let record of records) {
+            let found = true;
+
+            for (let key in filters) {
+                // if even one filtered doesn't match, it is not found
+                if (record[key] !== filters[key]) {
+                    found = false;
+                }
+            }
+
+            if (found) {
+                return record;
+            }
+        }
+    }
 }
 
-// we wrap it bcs backthen in node you cant have await at the top level of code
-const test = async () => {
-    const repo = new UsersRepository('users.json');
+// export the entire class
+// module.exports = UsersRepository;
 
-    const user = await repo.delete('3294870b');
+// export an instance of the class (so no possible bugs with filename typos)
+module.exports = new UsersRepository('users.json');
 
-}
 
-test();
+// Another file...

@@ -1,1 +1,27 @@
-[]
+[
+  {
+    "email": "matija.best@gmail.com",
+    "password": "moja",
+    "id": "d42d2c23"
+  },
+  {
+    "email": "setoja0208@gmail.com",
+    "password": "asf",
+    "id": "d2bab8ea"
+  },
+  {
+    "email": "m@mail.com",
+    "password": "qwe",
+    "id": "51e7fa6f"
+  },
+  {
+    "email": "setoja0208s@gmail.com",
+    "password": "qqq",
+    "id": "50d8858e"
+  },
+  {
+    "email": "setsoja020sasa8s@gmail.com",
+    "password": "www",
+    "id": "153c2af1"
+  }
+]
