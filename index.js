@@ -25,5 +25,5 @@ app.post('/', (req, res) => {
 
 app.listen(69, () => {
     console.log('Listening')
-})
+});
 
