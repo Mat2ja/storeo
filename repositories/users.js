@@ -102,5 +102,3 @@ class UsersRepository {
 // export an instance of the class (so no possible bugs with filename typos)
 module.exports = new UsersRepository('users.json');
 
-
-// Another file...

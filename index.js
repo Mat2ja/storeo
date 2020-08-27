@@ -11,7 +11,7 @@ app.use(cookieSession({
 }));
 
 // Browser sends the request to access the server, servers sents a response
-app.get('/', (req, res) => {
+app.get('/signup', (req, res) => {
     res.send(`
         <div>
             Your id is: ${req.session.userId}
@@ -26,11 +26,12 @@ app.get('/', (req, res) => {
 });
 
 // Browser submits data to the server
-app.post('/', async (req, res) => {
+app.post('/signup', async (req, res) => {
     const { email, password, passwordConfirmation } = req.body;
 
     // Check if email already exists
-    const existingUSer = await usersRepo.getOneBy({ email })
+    const existingUSer = await usersRepo.getOneBy({ email });
+    
     if (existingUSer) {
         return res.send('Email in use');
     }
@@ -48,6 +49,42 @@ app.post('/', async (req, res) => {
     req.session.userId = user.id;
     console.log(req.session);
     res.send('Account created!!');
+});
+
+// SIGNOUT
+app.get('/signout', (req, res) => {
+    // forget the current session (cookie)
+    req.session = null;
+    res.send('You are logged out');
+})
+
+// SIGNIN
+app.get('/signin', (req, res) => {
+    res.send(`
+        <div>
+            <form method='POST'>
+                <input name='email' type="email" placeholder="Email">
+                <input name='password' type="password" placeholder="Password">
+                <button>Sign In</button>
+            </form>
+        </div>
+    `)
+});
+app.post('/signin', async (req, res) => {
+    const { email, password } = req.body;
+
+    const user = await usersRepo.getOneBy({ email });
+
+    if (!user) {
+        return res.send('Email not found');
+    }
+    if (user.password !== password) {
+        return res.send('Invalid password');
+    }
+
+    // add to cookie
+    req.session.userId = user.id;
+    res.send('You are signed in!')
 });
 
 app.listen(3000, () => {
