@@ -31,7 +31,7 @@ app.post('/signup', async (req, res) => {
 
     // Check if email already exists
     const existingUSer = await usersRepo.getOneBy({ email });
-    
+
     if (existingUSer) {
         return res.send('Email in use');
     }
@@ -70,6 +70,7 @@ app.get('/signin', (req, res) => {
         </div>
     `)
 });
+
 app.post('/signin', async (req, res) => {
     const { email, password } = req.body;
 
@@ -78,7 +79,9 @@ app.post('/signin', async (req, res) => {
     if (!user) {
         return res.send('Email not found');
     }
-    if (user.password !== password) {
+
+    const validPassword = await usersRepo.comparePasswords(user.password, password);
+    if (!validPassword) {
         return res.send('Invalid password');
     }
 
