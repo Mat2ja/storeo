@@ -8,7 +8,7 @@ const app = express();
 // Now all our wrap-handleres will have this middleware function applied
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({
-    keys: ['aoz8j4fnmb73t'] // encryptio key for stored cookies
+    keys: ['aoz8j4fnmb73t'] // encryption key for stored cookies
 }));
 app.use(authRouter);
 
