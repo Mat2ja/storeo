@@ -3,7 +3,6 @@ const usersRepo = require('../../repositories/users');
 
 module.exports = {
     requireEmail:
-
         check('email')
             .trim()
             .normalizeEmail()

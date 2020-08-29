@@ -2,19 +2,22 @@ const express = require('express');
 const bodyParser = require('body-parser'); // middleware
 const cookieSession = require('cookie-session'); // middleware
 const authRouter = require('./routes/admin/auth')
+const productsRouter = require('./routes/admin/products')
 
 const app = express();
 
 // for every request, express will first look into public folder
 app.use(express.static('public'));
+
 // Now all our wrap-handleres will have this middleware function applied
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({
     keys: ['aoz8j4fnmb73t'] // encryption key for stored cookies
 }));
 app.use(authRouter);
+app.use(productsRouter);
 
 app.listen(3000, () => {
-    console.log('Listening');
+    console.log('>> Listening');
 });
 
