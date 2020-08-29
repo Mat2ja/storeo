@@ -1,12 +1,19 @@
-
 const express = require('express');
+const { check, validationResult } = require('express-validator');
+
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/signup');
 const signinTemplate = require('../../views/admin/auth/signin');
+const {
+    requireEmail,
+    requirePassword,
+    requirePasswordConfirmation,
+    requireEmailExists,
+    requireValidPasswordForUser
+} = require('./validators');
 
 // sub-router
 const router = express.Router();
-
 
 // Browser sends the request to access the server, servers sents a response
 router.get('/signup', (req, res) => {
@@ -14,30 +21,27 @@ router.get('/signup', (req, res) => {
 });
 
 // Browser submits data to the server
-router.post('/signup', async (req, res) => {
-    const { email, password, passwordConfirmation } = req.body;
+router.post(
+    '/signup',
+    [requireEmail, requirePassword, requirePasswordConfirmation], // returns the validationResult object with the error if it fails validation
+    async (req, res) => {
+        const errors = validationResult(req);
 
-    // Check if email already exists
-    const existingUSer = await usersRepo.getOneBy({ email });
+        if (!errors.isEmpty()) {
+            // return to signup page
+            return res.send(signupTemplate({ req, errors }));
+        }
 
-    if (existingUSer) {
-        return res.send('Email in use');
-    }
+        const { email, password } = req.body;
 
-    if (password !== passwordConfirmation) {
-        return res.send('Passwords must match')
-    }
+        const user = await usersRepo.create({ email, password });
 
-    //* Create a user in our user repo to represent this person
-    const user = await usersRepo.create({ email, password });
-
-    //* Store the ID of the user inside users cookie
-    // req.session is a object added by cookieSession middleware!
-    // we can add properties to it and it will turn cookie into a encoded string
-    req.session.userId = user.id;
-    console.log(req.session);
-    res.send('Account created!!');
-});
+        //* Store the ID of the user inside users cookie
+        // req.session is a object added by cookieSession middleware!
+        // we can add properties to it and it will turn cookie into a encoded string
+        req.session.userId = user.id;
+        res.send('Account created!!');
+    });
 
 // SIGNOUT
 router.get('/signout', (req, res) => {
@@ -48,26 +52,27 @@ router.get('/signout', (req, res) => {
 
 // SIGNIN
 router.get('/signin', (req, res) => {
-    res.send(signinTemplate())
+    res.send(signinTemplate({}))
 });
 
-router.post('/signin', async (req, res) => {
-    const { email, password } = req.body;
+router.post(
+    '/signin',
+    [requireEmailExists, requireValidPasswordForUser],
+    async (req, res) => {
+        const errors = validationResult(req);
 
-    const user = await usersRepo.getOneBy({ email });
+        if (!errors.isEmpty()) {
+            return res.send(signinTemplate({ errors }))
+        }
+        // TODO
 
-    if (!user) {
-        return res.send('Email not found');
-    }
+        const { email } = req.body;
 
-    const validPassword = await usersRepo.comparePasswords(user.password, password);
-    if (!validPassword) {
-        return res.send('Invalid password');
-    }
+        const user = await usersRepo.getOneBy({ email });
 
-    // add to cookie
-    req.session.userId = user.id;
-    res.send('You are signed in!')
-});
+        // add to cookie
+        req.session.userId = user.id;
+        res.send('You are signed in!')
+    });
 
 module.exports = router;

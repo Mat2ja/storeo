@@ -5,6 +5,8 @@ const authRouter = require('./routes/admin/auth')
 
 const app = express();
 
+// for every request, express will first look into public folder
+app.use(express.static('public'));
 // Now all our wrap-handleres will have this middleware function applied
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({
