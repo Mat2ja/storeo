@@ -33,7 +33,7 @@ module.exports = ({ content }) => {
             </nav>
             </header>
             <div class="container">
-            ${content}
+                ${content}
             </div>
         </body>
         </html>

@@ -1,5 +1,5 @@
 const express = require('express');
-const { check, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/signup');
@@ -23,7 +23,8 @@ router.get('/signup', (req, res) => {
 // Browser submits data to the server
 router.post(
     '/signup',
-    [requireEmail, requirePassword, requirePasswordConfirmation], // returns the validationResult object with the error if it fails validation
+    // returns the validationResult object with the error if it fails validation
+    [requireEmail, requirePassword, requirePasswordConfirmation], 
     async (req, res) => {
         const errors = validationResult(req);
 
@@ -64,8 +65,6 @@ router.post(
         if (!errors.isEmpty()) {
             return res.send(signinTemplate({ errors }))
         }
-        // TODO
-
         const { email } = req.body;
 
         const user = await usersRepo.getOneBy({ email });
