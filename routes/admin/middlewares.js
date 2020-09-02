@@ -1,7 +1,9 @@
 const { validationResult } = require('express-validator');
 
 module.exports = {
+
     handleErrors(templateFunc) {
+        // returns a function bcs we wanted to customize the middleware (with templateFunc argument)
         return (req, res, next) => {
             const errors = validationResult(req)
             console.log(errors)
@@ -11,5 +13,11 @@ module.exports = {
 
             next();
         }
+    },
+    requireAuth(req,res,next) {
+        if (!req.session.userId) {
+            return res.redirect('/signin');
+        }
+        next();
     }
 }
