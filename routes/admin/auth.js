@@ -1,6 +1,6 @@
 const express = require('express');
-const { validationResult } = require('express-validator');
 
+const { handleErrors } = require('./middlewares');
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/signup');
 const signinTemplate = require('../../views/admin/auth/signin');
@@ -24,24 +24,19 @@ router.get('/signup', (req, res) => {
 router.post(
     '/signup',
     // returns the validationResult object with the error if it fails validation
+    // [requireEmail, requirePassword, requirePasswordConfirmation], 
     [requireEmail, requirePassword, requirePasswordConfirmation], 
+    handleErrors(signupTemplate),
     async (req, res) => {
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            // return to signup page
-            return res.send(signupTemplate({ req, errors }));
-        }
-
+        // TODO user doenst get added, password says Invalid value!?
         const { email, password } = req.body;
-
         const user = await usersRepo.create({ email, password });
 
         //* Store the ID of the user inside users cookie
         // req.session is a object added by cookieSession middleware!
         // we can add properties to it and it will turn cookie into a encoded string
         req.session.userId = user.id;
-        res.send('Account created!!');
+        res.redirect('/admin/products');
     });
 
 // SIGNOUT
@@ -59,19 +54,14 @@ router.get('/signin', (req, res) => {
 router.post(
     '/signin',
     [requireEmailExists, requireValidPasswordForUser],
+    handleErrors(signinTemplate),
     async (req, res) => {
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            return res.send(signinTemplate({ errors }))
-        }
         const { email } = req.body;
-
         const user = await usersRepo.getOneBy({ email });
 
         // add to cookie
         req.session.userId = user.id;
-        res.send('You are signed in!')
+        res.redirect('/admin/products')
     });
 
 module.exports = router;
