@@ -2,13 +2,33 @@ body {
 	--primary: #631d76;
 	--secondary: #9e4770;
 	--white: #fbfbfb;
+	--white2: #fcfcfc;
 	--dark: #2e2532;
 	--black: #201a23;
+
+	background: var(--white2);
 }
+
+/* i added this */
+.product-card {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	border-radius: 5px;
+	overflow: hidden;
+}
+/* i added this */
 
 .product-card figure {
 	text-align: center;
 	padding: 5px;
+	flex: 1;
+
+	/* i added this */
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .navbar ul.social {
@@ -69,6 +89,11 @@ body {
 .product-card .card-footer form {
 	display: block;
 	width: 100%;
+}
+
+.product-card .card-footer form button {
+	background: var(--white2);
+	/* border-radius: 0; */
 }
 
 .admin > div.container {
