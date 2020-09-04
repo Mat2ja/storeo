@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser'); // middleware
 const cookieSession = require('cookie-session'); // middleware
 const authRouter = require('./routes/admin/auth')
-const productsRouter = require('./routes/admin/products')
+const adminProductsRouter = require('./routes/admin/products');
+const productsRouter = require('./routes/products');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cookieSession({
     keys: ['aoz8j4fnmb73t'] // encryption key for stored cookies
 }));
 app.use(authRouter);
+app.use(adminProductsRouter);
 app.use(productsRouter);
 
 app.listen(3000, () => {
