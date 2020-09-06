@@ -10,8 +10,8 @@ module.exports = ({ products }) => {
                             <img src="data:image/png;base64, ${product.image}"/>
                         </figure>
                         <div class="card-content">
-                            <h3 class="subtitle">${product.title}</h3>
-                            <h5>$${product.price}</h5>
+                            <h3 class="subtitle is-5">${product.title}</h3>
+                            <h5 class='subtitle is-4'>$${product.price}</h5>
                         </div>
                         <footer class="card-footer">
                             <form action="/cart/products" method="POST">
