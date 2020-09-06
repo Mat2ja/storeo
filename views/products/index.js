@@ -4,7 +4,7 @@ module.exports = ({ products }) => {
     const renderedProducts = products
         .map(product => {
             return `
-                <div class="column is-one-quarter">
+                <div class="column is-half is-one-quarter-widescreen">
                     <div class="card product-card">
                         <figure>
                             <img src="data:image/png;base64, ${product.image}"/>
@@ -39,7 +39,7 @@ module.exports = ({ products }) => {
             <section>
                 <div class="container">
                     <div class="columns">
-                        <div class="column "></div>
+                        <div class="column"></div>
                             <div class="column is-four-fifths">
                                 <div>
                                     <h2 class="title text-center">Featured Items</h2>
