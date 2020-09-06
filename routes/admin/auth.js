@@ -24,11 +24,9 @@ router.get('/signup', (req, res) => {
 router.post(
     '/signup',
     // returns the validationResult object with the error if it fails validation
-    // [requireEmail, requirePassword, requirePasswordConfirmation], 
-    [requireEmail, requirePassword, requirePasswordConfirmation], 
+    [requireEmail, requirePassword, requirePasswordConfirmation],
     handleErrors(signupTemplate),
     async (req, res) => {
-        // TODO user doenst get added, password says Invalid value!?
         const { email, password } = req.body;
         const user = await usersRepo.create({ email, password });
 

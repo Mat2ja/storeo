@@ -10,13 +10,14 @@ module.exports = ({ products }) => {
                             <img src="data:image/png;base64, ${product.image}"/>
                         </figure>
                         <div class="card-content">
-                            <h3 class="subtitle is-5">${product.title}</h3>
+                            <h3 class="subtitle">${product.title}</h3>
                             <h5 class='subtitle is-4'>$${product.price}</h5>
                         </div>
                         <footer class="card-footer">
-                            <form action="/cart/products" method="POST">
+                            <form action="/cart/products/" method="POST">
+                                <input hidden value='${product.id}' name='productId'>
                                 <button class="button has-icon is-inverted">
-                                <i class="fa fa-shopping-cart"></i> Add to cart
+                                    <i class="fa fa-shopping-cart"></i> Add to cart
                                 </button>
                             </form>
                         </footer>
@@ -48,7 +49,7 @@ module.exports = ({ products }) => {
                                     </div>
                                 </div>
                             </div>
-                        <div class="column "></div>
+                        <div class="column"></div>
                     </div>
                 </div>
             </section>
