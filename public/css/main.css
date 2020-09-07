@@ -1,15 +1,19 @@
 body {
-	--primary: #631d76;
-	--secondary: #9e4770;
+	--primary: #8a7c60;
+	--secondary: #f4acb7;
+	--secondary2: hsla(351, 77%, 82%, 0.45);
 	--white: #fbfbfb;
 	--white2: #fcfcfc;
-	--dark: #2e2532;
-	--black: #201a23;
+	--dark: #575042;
+	--black: #1d2129;
 
 	background: var(--white2);
 }
 
-/* i added this */
+.title {
+	color: var(--black);
+}
+
 .product-card {
 	height: 100%;
 	display: flex;
@@ -17,8 +21,15 @@ body {
 
 	border-radius: 5px;
 	overflow: hidden;
+
+	transition: all 200ms ease;
+
+	box-shadow: 0 0 1rem 2px rgba(10, 10, 10, 0.1);
 }
-/* i added this */
+
+.product-card:hover {
+	box-shadow: 0 0 0 1px var(--secondary), 5px 5px 0 1px var(--secondary2);
+}
 
 .product-card figure {
 	text-align: center;
@@ -29,16 +40,20 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	padding: 0;
 }
 
-.navbar ul.social {
+.social {
 	display: flex;
+	align-items: center;
 }
-.navbar ul.social li {
+
+.social li {
 	margin-right: 20px;
 	text-decoration: none;
 }
-.navbar ul.social li a {
+.social a {
 	color: var(--white);
 }
 
@@ -46,8 +61,12 @@ body {
 	margin: 50px;
 }
 
-.columns.products {
+.products {
 	flex-wrap: wrap;
+}
+
+.container {
+	padding: 1rem;
 }
 
 .card-footer-item i {
@@ -86,25 +105,21 @@ body {
 .product-card .card-footer {
 	justify-content: center;
 }
+
 .product-card .card-footer form {
 	display: block;
 	width: 100%;
 }
 
-.product-card .card-footer form button {
+add-to-cart-btn {
 	background: var(--white2);
-	/* border-radius: 0; */
-}
-.product-card figure {
-	padding: 0;
 }
 
-.product-card img {
+.product-img {
 	transition: all 250ms ease-out;
 }
 
-.product-card:hover img {
-	transform: scale(1.1);
+.product-img:hover {
 }
 
 .admin > div.container {
@@ -138,13 +153,10 @@ body {
 	width: 100%;
 	height: 50px;
 
-	transition: all 100ms ease-out;
+	transition: all 200ms ease-out;
 }
 
-
 .product-card .card-footer button:hover {
-	background: #363636;
-	color: #FCFCFC;
 }
 
 .product-card .card-footer button i {
@@ -188,4 +200,15 @@ body {
 .cart-right {
 	display: flex;
 	align-items: center;
+}
+
+.fa-cookie {
+	color: var(--primary);
+}
+
+.product-price {
+}
+
+.product-title {
+	color: var(--primary);
 }

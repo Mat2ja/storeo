@@ -8,8 +8,8 @@ module.exports = ({ content }) => {
             <title>Shop</title>
             
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
-            <link href="/css/main.css" rel="stylesheet">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"></link>
+            <link href="/css/main.css" rel="stylesheet">
         </head>
 
         <body>
@@ -33,6 +33,11 @@ module.exports = ({ content }) => {
                                 <li><a href=""><i class="fab fa-linkedin"></i></a></li>
                                 <li><a href=""><i class="fab fa-dribbble"></i></a></li>
                                 <li><a href=""><i class="fab fa-google-plus"></i></a></li>
+                                <li>
+                                    <a href="/admin/products">
+                                        <i class="fas fa-user-shield"></i> Admin
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -41,16 +46,20 @@ module.exports = ({ content }) => {
                     <div class="container navbar-container">
                         <div>
                             <a href="/">
-                            <h3 class="title">StoreO</h3>
+                            <h3 class="title"><i class="fas fa-cookie"></i> Storeo</h3>
                             </a>
                         </div>
                         <div class="navbar-item">
                             <div class="navbar-buttons">
                                 <div class="navbar-item">
-                                    <a href="/"><i class="fa fa-star"></i> Products</a>
+                                    <a href="/">
+                                        <i class="fa fa-star"></i> Products
+                                    </a>
                                 </div>
                                 <div class="navbar-item">
-                                    <a href="/cart"><i class="fa fa-shopping-cart"></i> Cart</a>
+                                    <a href="/cart">
+                                        <i class="fa fa-shopping-cart"></i> Cart
+                                    </a>
                                 </div>
                             </div>
                         </div>

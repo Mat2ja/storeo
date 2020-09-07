@@ -7,16 +7,16 @@ module.exports = ({ products }) => {
                 <div class="column is-half is-one-quarter-widescreen">
                     <div class="card product-card">
                         <figure>
-                            <img src="data:image/png;base64, ${product.image}"/>
+                            <img src="data:image/png;base64, ${product.image}" class='product-img'/>
                         </figure>
                         <div class="card-content">
-                            <h3 class="subtitle">${product.title}</h3>
-                            <h5 class='subtitle is-4'>$${product.price}</h5>
+                            <h3 class="subtitle product-title">${product.title}</h3>
+                            <h5 class='subtitle is-4 product-price'>$${product.price}</h5>
                         </div>
                         <footer class="card-footer">
                             <form action="/cart/products/" method="POST">
                                 <input hidden value='${product.id}' name='productId'>
-                                <button class="button has-icon is-inverted">
+                                <button class="button has-icon add-to-cart-btn">
                                     <i class="fa fa-shopping-cart"></i> Add to cart
                                 </button>
                             </form>
@@ -40,16 +40,14 @@ module.exports = ({ products }) => {
             <section>
                 <div class="container">
                     <div class="columns">
-                        <div class="column"></div>
-                            <div class="column is-four-fifths">
-                                <div>
-                                    <h2 class="title text-center">Featured Items</h2>
-                                    <div class="columns products">
-                                        ${renderedProducts}  
-                                    </div>
+                        <div class="column">
+                            <div>
+                                <h2 class="title text-center">Featured Items<h2>
+                                <div class="columns products">
+                                    ${renderedProducts}  
                                 </div>
                             </div>
-                        <div class="column"></div>
+                        </div>
                     </div>
                 </div>
             </section>
