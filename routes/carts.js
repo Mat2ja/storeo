@@ -34,8 +34,7 @@ router.post(
             items: cart.items
         })
 
-
-        res.send('Added to cart')
+        res.redirect('/cart')
     })
 
 // Receive a get request to show all items in cart
@@ -63,5 +62,19 @@ router.get(
 )
 
 // Receive a post request to delete an item from cart
+router.post(
+    '/cart/products/delete',
+    async (req, res) => {
+        const { itemId } = req.body;
+        const { cartId } = req.session;
+
+        const cart = await cartsRepo.getOne(cartId);
+        const items = cart.items.filter(item => item.id !== itemId);
+
+        await cartsRepo.update(cartId, { items });
+
+        res.redirect('/cart');
+    }
+)
 
 module.exports = router;
